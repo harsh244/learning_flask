@@ -1,6 +1,6 @@
 # import the Flask class from the flask module
 import flask
-from flask import Flask, render_template, redirect, url_for, request ,session
+from flask import Flask, render_template, redirect, url_for, request ,session,flash
 from flask_wtf import Form
 from wtforms import StringField,PasswordField
 import os
@@ -9,13 +9,12 @@ import os
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 # use decorators to link the function to a url
-@app.route('/')
+@app.route('/jo')
 def home():
-    return "Hello, World!"  # return a string
+    return render_template('index.html')  # return a string
 
-@app.route('/welcome')
+@app.route('/')
 def welcome():
-    print ("yo")
     return render_template('welcome.html')  # render a template
 
 class LoginForm(Form):
@@ -31,22 +30,19 @@ def login():
         error = 'Invalid Credentials. Please try again.'
     else:
         session['logged_in']=True
-        flash('You were just logged_in')
+        flash('You were just logged in')
         return redirect(url_for('home'))
     return render_template('login.html', form1=form1)
 
-@app.route('/register',methods=['GET','POST'])
-def register():
-    return "Say yo"
 @app.route('/logout')
 def logout():
     session.pop('logged_in',None)
-    return render_template(url_for('welcome'))
+    flash('You just logged out')
+    return redirect(url_for('welcome'))
 
-# start the server with the 'run()' method
+# # start the server with the 'run()' method
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), 
-            port=int(os.getenv('PORT', 4444)))
+    app.run(debug=True)
   
 
 
