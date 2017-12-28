@@ -1,0 +1,21 @@
+{% from "formhelpers.html" import render_field %}
+<html>
+  <head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+      <h1>Please login</h1>
+      <br>
+      <form action="" method="post">
+        {{render_field(form1.username)}}
+        {{render_field(form1.password)}}
+        <input class="btn btn-default" type="submit" value="Login">
+        <input class="btn btn-default" type="submit" value="Register">
+      </form>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+  </body>
+</html
